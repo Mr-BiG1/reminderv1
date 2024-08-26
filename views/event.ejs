@@ -1,0 +1,35 @@
+<h1>
+    <%= data.title %>
+</h1>
+<article class="article">
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th>Title</th>
+                <th>Time</th>
+                <th>started Time</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <%= data.title %>
+                </td>
+                <td>
+                    <%= data.reminderTime %>
+                </td>
+                <td>
+                    <%= data.startTime %>
+                </td>
+                <td>
+                    <%= data.description %>
+                </td>
+                <td>
+                    <a class="btn btn-dark m-2" href="/delete/<%= data. _id %>">Delete</a>
+                    <a class="btn btn-dark m-2" href="/update/<%= data. _id %>">Edit</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</article>

@@ -1,0 +1,42 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Calendar</h1>
+                <form class="container" action="/update/<%= data._id %>" method="post">
+                    <div class="row">
+                        <div class="form-group">
+                            <label for="email">Email address</label>
+                            <input type="email" name="email" class="form-control" id="email"
+                                aria-describedby="emailHelp" value="<%= data.email %>">
+                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone
+                                else.</small>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="subject">title</label>
+                            <input type="text" name="title" id="subject" value="<%= data.title %>">
+                        </div>
+                        <br>
+                        <div class=" form-group">
+                            <label for="message">Description</label>
+                            <textarea name="description" id="description" cols="30"
+                                rows="10"><%= data.description %></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="startTime">Start Time:</label>
+                            <input type="datetime-local" id="startTime" name="startTime" class="form-control" required
+                                value="<%= data.startTime%>">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reminderTime">Reminder Time:</label>
+                            <input type="datetime-local" id="reminderTime" name="reminderTime" class="form-control"
+                                required value="<%= data.reminderTime %>">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+</section>

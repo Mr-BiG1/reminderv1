@@ -1,0 +1,17 @@
+body, html {
+    height: 100%;
+}
+
+.navbar {
+    margin-bottom: 0;
+}
+
+.col-auto.col-md-3.col-xl-2 {
+    height: 100vh;
+    overflow-y: auto;
+    position: sticky;
+    top: 0;
+}
+a{
+    text-decoration: none;
+}
