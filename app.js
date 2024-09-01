@@ -1,5 +1,4 @@
 const express =  require('express');
-const nodemailer = require('nodemailer');
 const expressLayout = require('express-ejs-layouts');
 const connectDB = require('./server/config/database')
 

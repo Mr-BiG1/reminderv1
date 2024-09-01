@@ -8,18 +8,20 @@ const { AwsInstance } = require('twilio/lib/rest/accounts/v1/credential/aws');
 const moment = require('moment');
 const message = require('../models/message');
 const { now } = require('mongoose');
-
+const {DateTime} = require('luxon');
 
 // setting out main rout
 routes.get('/', (req, res) => {
-    res.render('index')
+    res.render('index',{
+        tiems:[4,3,4,3]
+    })
 })
 
 
 // Example route for sending a message
 routes.post('/set-reminder', async (req, res) => {
     try {
-        const now = Date.now(); 
+        const now = Date.now();
         const { email, reminderTime, startTime, title, description } = req.body;
         // send_sms(description)
         // string the values to teh database 
@@ -36,11 +38,9 @@ routes.post('/set-reminder', async (req, res) => {
         // finding all the data.
 
         const data = await ReminderSchema.find();
-        res.render('schedule', {
-            data
-        })
+        res.rect('/schedule')
     } catch (error) {
-        console.log(error)
+        res.status(500).json({ message: 'Error deleting user' });
     }
 });
 
@@ -67,17 +67,21 @@ routes.get('/events/:id', async (req, res) => {
 
         res.render('event', { data })
     } catch (error) {
-
+        res.status(500).json({ message: 'Error deleting user' });
     }
 })
 
-// router to delete 
+/**
+ * GET by ID
+ * to delete single data  
+ * render to '/schedule`  .
+ */
 routes.get('/delete/:id', async (req, res) => {
     try {
         const id = req.params.id;
         await ReminderSchema.findByIdAndDelete(id);
         const data = await ReminderSchema.find();
-        res.render('schedule', { data })
+        res.redirect('/schedule');
 
     } catch (error) {
         res.status(500).json({ message: 'Error deleting user' });
@@ -85,7 +89,11 @@ routes.get('/delete/:id', async (req, res) => {
 });
 
 
-// router to edit.
+/**
+ * POST by ID
+ * get  data of single reminder using findOne 
+ * render to `/update` to update page .
+ */
 routes.get('/update/:id', async (req, res) => {
     try {
         const id = req.params.id;
@@ -97,27 +105,33 @@ routes.get('/update/:id', async (req, res) => {
 });
 
 
-// router to update
+/**
+ * GET post by ID
+ * to update details 
+ * redirect to `/events/${id}` to event page.
+ */
+
 routes.post('/update/:id', async (req, res) => {
     try {
         const id = req.params.id;
-        const { email, reminderTime, startTime, title, description } = req.body;
-
+        const { email, reminderTime,  title, description } = req.body;
+        const now = Date.now();
         const data = await ReminderSchema.findOne({_id: id});
         if(data){
             data.email = email;
             data.reminderTime = new Date(reminderTime);
-            data.startTime = new Date(startTime);
+            data.startTime = new Date(now);
             data.title = title;
             data.description = description;
 
             await data.save();
-            res.render('event',{data});
-        }else{
-            res.status(404).json({message:'User not found'});
+            res.redirect(`/events/${id}`);
+        } else {
+            res.status(404).json({ message: 'User not found' });
         }
     } catch (error) {
         res.status(500).json({ message: 'Error updating user' });
+        console.log(error);
     }
 })
 
